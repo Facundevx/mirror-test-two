@@ -26,7 +26,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Muestra cada topic y toda su info"""
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
     #verifica q el topic corresponda al usuario, por seguridad.
     if topic.owner != request.user:
         raise Http404
