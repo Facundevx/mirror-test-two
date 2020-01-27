@@ -1,6 +1,6 @@
 FROM python:3.7-slim-stretch
 
-RUN git clone -b master https://github.com/Facundevx/learning_log
+RUN git clone -b master https://github.com/Facundevx/learning_log.git
 
 EXPOSE 8000
 
