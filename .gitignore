@@ -1,6 +1,6 @@
 11_env/
-/users/_pycache_/
+*_pycache_/
 *.sqlite3
 .vscode
-/.idea
+*.idea
 
