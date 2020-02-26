@@ -11,7 +11,7 @@ class Topic(models.Model):
 
     def __str__(self):
         """Devuelve un string del model"""
-        return  self.text
+        return self.text
 
 
 class Entry(models.Model):
