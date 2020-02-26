@@ -2,5 +2,5 @@
 /users/_pycache_/
 *.sqlite3
 .vscode
-.idea
+/.idea
 

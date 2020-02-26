@@ -4,7 +4,7 @@ RUN git clone -b master https://github.com/Facundevx/learning_log.git
 
 EXPOSE 8000
 
-WORKDIR /app
+WORKDIR /learning_log
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
