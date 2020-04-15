@@ -129,7 +129,7 @@ LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 #con eso le decimos a q pagina redireccionar cuando se haga el log out.
 
-#Heroku settings
+# Heroku settings
 import django_heroku
 django_heroku.settings(locals())
 

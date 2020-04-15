@@ -5,16 +5,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
-# Create your views here.
-
-#Esta funcion hace un render de la respuesta en base a la data q le provee el views
-#entonces seteo una view para la home page
-#usa dos argumentos, un request y un template
-#esta va a ser mi home page
 
 def index(request):
     """Home page para learning log"""
     return render(request, 'learning_logs/index.html')
+
 
 @login_required
 def topics(request):
@@ -22,6 +17,7 @@ def topics(request):
     topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
+
 
 @login_required
 def topic(request, topic_id):
@@ -34,6 +30,7 @@ def topic(request, topic_id):
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
+
 @login_required
 def new_topic(request):
     """anade un nuevo topico"""
@@ -41,7 +38,7 @@ def new_topic(request):
         # Si no se ingresa data, crea un formulario en blanco
         form = TopicForm
     else:
-        #Si se ingresa data, se procesa
+        # Si se ingresa data, se procesa
         form = TopicForm(request.POST)
         if form.is_valid():
             new_topic = form.save(commit=False)
@@ -52,6 +49,7 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
+
 @login_required
 def new_entry(request, topic_id):
     """Anade una entry a un topic particular"""
@@ -61,7 +59,7 @@ def new_entry(request, topic_id):
     if request.method != 'POST':
         form = EntryForm()
     else:
-        #proceso la data
+        # Proceso la data
         form = EntryForm(data=request.POST)
         if form.is_valid():
             new_entry = form.save(commit=False)
@@ -69,13 +67,14 @@ def new_entry(request, topic_id):
             new_entry.save()
             return HttpResponseRedirect(reverse('learning_logs:topic',
                                                 args=[topic_id]))
-    #el commit false hace q se cree un nuevo entry object pero no lo guarda en la db todavia
-    #hasta q le de .save
+    # el commit false hace q se cree un nuevo entry object pero no lo guarda en la db todavia
+    # hasta q le de .save
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
-    #dsp con el return http hace q el usuario vuelva a la pagina de topic y necesita dos argumentos
-    #un pattern de la url q queremos generar y un args de lista, q contiene cualquier argumento
-    #nescerio para generar la url
+    # dsp con el return http hace q el usuario vuelva a la pagina de topic y necesita dos argumentos
+    # un pattern de la url q queremos generar y un args de lista, q contiene cualquier argumento
+    # nescerio para generar la url
+
 
 @login_required
 def edit_entry(request, entry_id):
@@ -86,10 +85,10 @@ def edit_entry(request, entry_id):
         raise Http404
 
     if request.method != 'POST':
-        #me devuelve la entry q estaba guardada
+        # me devuelve la entry q estaba guardada
         form = EntryForm(instance=entry)
     else:
-        #postea la data editada y la procesa
+        # postea la data editada y la procesa
         form = EntryForm(instance=entry, data=request.POST)
         if form.is_valid():
             form.save()
@@ -98,6 +97,6 @@ def edit_entry(request, entry_id):
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
 
-#un context es un diccionario en el q las keys son los nombres q usamos en el
-#template para acceder a la data y los valores son la data q tenemos q mandar
-#al template
+# un context es un diccionario en el q las keys son los nombres q usamos en el
+# template para acceder a la data y los valores son la data q tenemos q mandar
+# al template
